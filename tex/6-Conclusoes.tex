@@ -1,0 +1,51 @@
+%!TEX root = ../main.tex
+% !TeX encoding = UTF-8
+\section{Conclusions} \label{chap:conclu}
+    %projeto de sistemas
+    %A demanda por curto tempo para disponibilidade ao mercado, somado ao fato dos produtos exigirem propriedades de corretude, rapidez, confiabilidade e preço acessível representam um desafio para projetistas de sistemas embarcados em geral.
+    %utiliza o particionamento para o problema de desempenho
+    %Com o desenvolvimento de sistemas embarcados cada vez mais complexos, o particionamento \hs\ tornou-se um problema de otimização em \codesign\ de sistemas.
+    %wearable
+    %Como dispositivos \wearables\ também demandam um alto desempenho e/ou baixo consumo de energia sem apresentar desequilíbrio em confiabilidade e segurança entre outros, aplicou-se o particionamento sobre essa classe de sistemas, com foco em tais melhorias.
+    The short time demand for market disponibility summed up to the fact of products requires correctness, speed, reliability and affordable price proprieties represent a challenge for ES designers in general.
+    With the ES development is increasingly complex, the hardware and software partitioning became an optimization problem in systems codesign.
+    As wearable devices also require high performance and low energy cost without the tradeoff, was applied the partitioning in this system class targeting those improvements.
+    
+    %proposta
+    %A proposta da pesquisa constituiu-se na busca pelo aprimoramento de desempenho de dispositivos computacionais \wearables,\ utilizando o particionamento como meio, visando gasto energético e de recursos limitados de plataforma FPGA.
+    The propose of this research is to reach the enhancement of performance of wearable devices, using the partitioning, aiming energy spent and limited resources of FPGA platform.
+    
+    
+    %comentando os testes
+    %Para a avaliação, realizou-se particionamento de quatro algoritmos candidatos (Estatístico \A$_{St}$, Lagrange \A$_{La}$, Números Primos  \A$_{NP}$ e Processamento de Risco \A$_{Ri}$) de um projeto de capacete de segurança para ciclistas, variando cada teste em quantidade de sensores e também o \buffer\ de operação.
+    For the evaluation, we partitioned four candidate algorithms (Statistical \A$_{St}$, Lagrange \A$_{La}$, Prime Numbers  \A$_{NP}$ and Risk Processing \A$_{Ri}$) of a helmet design for safety for cyclists, varying each test in sensors numbers and buffer size.
+    
+    % comentando os resultados
+    %Três dos quatro sistemas (Lagrange \Ss$_{La}$, Números Primos \Ss$_{NP}$ e Risco \Ss$_{Ri}$) obtiveram sucesso na busca por desempenho apenas pelo processo de particionamento, aumentando no mínimo $9,6\%$ seus desempenhos, utilizando o valor máximo de $ 5,5\% $ de recursos e $ 5,4\% $ de energia do \hardware\ reconfigurável.
+    %
+    %O sistema Estatístico \Ss$_{St}$ em $45,5\%$ dos testes obteve maior desempenho \software\ comparado com \hardware.
+    %Esse resultado já era esperado, já que seu código exige bastante comunicação entre \hs, afetando seu desempenho.
+    Three of four systems (Lagrange \A$_{La}$, Prime Numbers  \A$_{NP}$ and Risk Processing \A$_{Ri}$) had success in reach for performance only by partitioning process, increasing at least 9,6\% of performance, using the maximum value of 5,5\% of resources and 5,4\% of the energy of reconfigurable hardware.
+    The Statistical \Ss$_{St}$ in 45,5\% of tests had bigger performance in software than hardware.
+    This result was already expected since its code requires more hardware and software communication, affecting its performance.
+
+    %trabalhos futuros
+    %har e softprocessadores
+    %Para futuros trabalhos seria possível realizar a comparação do sistema \wearable\ particionado variando, também a arquitetura de sintetização, ou seja, testes de desempenho entre \textit{soft} e \textit{hard-}processadores, ambos utilizando FPGA.
+    For future works we would compare the partitioned wearable system also varying its architecture, that is, comparing the wearable performance between soft and hard-processor, both in FPGA platform.
+    
+    % fpga e prototipações
+    %Comparações entre o uso de plataformas FPGA e plataformas de prototipações também seriam viáveis, ainda com foco em busca em otimizações em desempenho e eficiência energética sobre \wearables.
+    
+    %mais alguma sugestão de trabalhos?
+    %E também a adição do parâmetro otimização em \hardware,\ verificando o percentual de ganho ao utilizar as técnicas de otimizações em nível de \hardware\ existentes para HLS.
+    
+    
+    % use section* for acknowledgment
+    \section*{Acknowledgment}
+        %Agradecemos à Universidade Federal de Ouro Preto, ao CNPq, CAPES e à FAPEMIG pelo subsídio dessa pesquisa.    
+        We thank to the Federal University of Ouro Preto, to CNPq, CAPES ant the FAPEMIG by the subsidy of this research.
+
+   % conference papers do not normally have an appendix
+   %\section*{Apêndice}    
+   %    \hphantom{a}

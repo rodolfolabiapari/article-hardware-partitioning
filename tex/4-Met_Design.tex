@@ -1,0 +1,212 @@
+%!TEX root = ../main.tex
+% !TeX encoding = UTF-8
+\section{Principles of Partitioning of General Systems} \label{chap:design}
+    
+    %A seguir serão descritos tópicos utilizados para o entendimento do particionamento, seguindo conceitos estabelecidos por vários trabalhos como \cite{Arato2003, Arato2005, Mann2007, BenHajHassine2017, Sass2010}.
+    %Esses tópicos são necessários para o entendimento básico dos arcabouços metodológicos de \codesign\ e o seu particionamento para sistemas, em especial para \wearables, além de definições formais sobre.
+    Next will be described topics used to the knowledge of partitioning, following concepts established by various works as \cite{Arato2003, Arato2005, Mann2007, BenHajHassine2017, Sass2010}.
+    These topics are necessary for the fundamental understanding of the codesign methodological frameworks and its partitioning for systems, in particular for wearables, besides formal definitions.
+    
+    %É possível descrever sistemas livre de especificações formais por meio de descrições de protótipos simples, conhecidos como \Design\ de Referência de \Software\ (DRS)\cite{Sass2010}.
+    %Dessa forma, o algoritmo a ser analisado também pode ser representado como grafo de rotinas, chamado de Grafo de Controle de Fluxo (GCF) \cite{Mann2007}.
+    %Ele é definido por $C = (B, F) \label{eq:subrotinaa}$
+    %onde $B$ são vértices que representam as tarefas 
+    %%http://www.dcc.ufrj.br/~gabriel/microarq/Escalonamento.pdf
+    %e $ F $ são arestas que indicam todas as possibilidades de caminhos entre elas.
+    It is possible to describe systems free of formal specifications by simple prototype descriptions, known as software reference design (SRD) \cite{Sass2010}.
+    In this way, the algorithm to be analyzed also can be represented by a routing graph, called Control Flow Graph (CFG) \cite{Mann2007}.
+    It is defined by $C = (B, F) \label{eq:subrotina}$ where $B$ are vertices that represent the tasks and $ F $ are edges that represent all the possibility of the path between them.
+    
+    
+    %A decomposição de um DRS pode gerar dois componentes: uma porção a ser realizada em \hardware\ e outra executada em \software.
+    %Essa decisão de divisão é chamada de Problema de Particionamento.
+    The decomposition of a SRD can generate two components: a portion to be executed in hardware and other in software.
+    This division decision it is called of Problem of Partitioning Hardware and Software.
+    
+    \subsection{Formal Definition of the Hardware and Software Partitioning Problem} \label{sec:gc}
+        %Um Grafo de Chamada (GC) consiste num conjunto de GCFs, um por sub-rotinas, ou seja, $\mathcal{C} = {C_0, C_1, \dots C_{n-1}}$
+        A Call Graph (CG) consists in a conjunct of CFGs, one by subroutines, that is, $\mathcal{C} = {C_0, C_1, \dots C_{n-1}}$
+        %onde $ C_i = (B_i, F_i) $ representa o GCF de uma sub-rotina $ i $.
+        where $ C_i = (B_i, F_i) $ represents the CFG of one subroutine $ i $.
+        %Sendo assim, o grafo estático de chamada da aplicação completa é escrito por $\mathcal{A} = (\mathcal{C}, \mathcal{L}) \label{eq:aa}$
+        Therefore, the static call graph of all application is describes by $\mathcal{A} = (\mathcal{C}, \mathcal{L}) \label{eq:a}$
+        %onde \A\ representa uma aplicação específica e $ \mathcal{L} \subseteq \mathcal{C} \times \mathcal{C} $ é um subconjunto do plano cartesiano\footnote{Duas sub-rotinas são relacionadas se podem ser determinadas que, no tempo de compilação, a sub-rotina $ i $ tem potencial de invocar a sub-rotina $ j $, ou seja, $ (C_i, C_j) \in \mathcal{L} $.} dos GCFs.
+        where \A\ represents an specific application and $ \mathcal{L} \subseteq \mathcal{C} \times \mathcal{C} $ is a subset of cartesian plan\footnote{Two subroutines are related if it can be determined that, at compile time, the subroutine $ i $ has the potential to invoke the subroutine $ j $, that is, $ (C_i, C_j) \in \mathcal{L} $.}
+        of CFGs.
+        
+        
+        %Com esses conceitos definidos, é possível definir-se também uma partição como $ \mathcal{S} = \{S_0, S_1, \dots S_i\} $ sendo $ i $ quantidade de partições, e $U$ como o conjunto de todas as sub-rotinas.
+        %Assim, uma partição \Ss\ de um conjunto universal $ U $ é definida como um conjunto de subconjuntos de $ U $, podendo ser definida como
+        With these concepts defined, it is possible to define also a partition as $ \mathcal{S} = \{S_0, S_1, \dots S_i\} $ being $ i $ the quantity of partitions, and $ U $ as the set of all the subroutines.
+        Thus, a partition \Ss\ of a universal set a $ U $ is defined as a set of subsets of $ U $, can be described as
+        %
+        \begin{eqnarray}
+        \bigcup_{S \in \mathcal{S}} S &=& U           \label{eq:part_form_1} \\
+        \forall S, S' \in \mathcal{S} | S \cap S' &=& \emptyset  \label{eq:part_form_2}\\
+        \forall S \in \mathcal{S}\ |\ S &\neq& \emptyset  \label{eq:part_form_3}
+        \end{eqnarray}
+        %
+        %onde a Equação~\ref{eq:part_form_1} diz que cada elemento de $ U $ é um membro de pelo menos um subconjunto $ S \in \mathcal{S} $, e as Equações~\ref{eq:part_form_2} e \ref{eq:part_form_3} dizem que os subconjuntos $ S \in \mathcal{S} $ são emparelhados, disjuntos e não vazios.
+        %Em outras palavras, cada elemento do nosso universo $ U $ termina exatamente em um dos subconjuntos de $\mathcal{S}$ e nenhum dos subconjuntos são vazios.
+        where the Equation~\ref{eq:part_form_1} says that each element of $ U $ is a member at least one subset $ S \in \mathcal{S} $, and the Equations~\ref{eq:part_form_2} and \ref{eq:part_form_3} say that the subsets $ S \in \mathcal{S} $ are paired, disjoint and non-empty.
+        In others words, each element of our universe $ U $ ends precisely in one of the subsets \Ss\ and none of the subsets are empty.
+        
+        %Com isso, é possível aplicar o formalismo à $ \mathcal{A} $, se assumirmos que nosso universo é o conjunto de todas as tarefas $B$ de um dispositivo \wearable\ e, assim, $U$ são as partições de sub-rotinas
+        With that, it is possible to apply the formalism to \A,\ if we assume that our universe is the set of all the tasks $ B $ of a wearable device and so, $ U $ are the partitions of subroutines.
+        %
+        \begin{equation}
+        U = \bigcup_{C \in \mathcal{C}} B(C) \label{eq:bigcup}
+        \end{equation}
+        %
+        %sendo esta a partição natural da aplicação, onde
+        being this the natural partition of the application, where
+        %
+        \begin{equation} \small
+        \mathcal{S}  = \left \{
+        \underbrace{\left \{ b_0, b_1, \dots b_{i-1} \right \}}_{\textnormal{subroutine }C_0},
+        \underbrace{\left \{ b_i, b_{i+1}, \dots \right \}}_{\textnormal{subroutine }C_1},\dots
+        \underbrace{\left \{ b_j, b_{j+1}, \dots \right \}}_{\textnormal{subroutine }C_{n-1}}
+        \right \}
+        \end{equation}
+        
+        
+        \makeatletter
+        \def\@eqnnum{{\normalsize \normalcolor (\theequation)}}
+        \makeatother
+        
+        %
+        %O propósito é a reorganização de $U$ em um particionamento com dois subconjuntos  $ \mathcal{S} = \{S_0, S_1\} $, sendo eles \hs.
+        %Dessa forma, teremos uma nova partição \Ss$'$ gerando um novo resultado $ \mathcal{A}’ = (\mathcal{C}’, \mathcal{L}’) $, inferido a partir da reorganização da partição $ \mathcal{S} $.
+        The propose is the reorganization of $ U $ in a partitioning with two subsets $ \mathcal{S} = \{S_0, S_1\} $, being them hardware and software.
+        Therefore, we will have a new partition \Ss$ ' $ generating a new result $ \mathcal{A}’ = (\mathcal{C}’, \mathcal{L}’) $, inferred by partition reorganization \Ss.
+        
+        %O segundo passo é mapear cada subconjunto de $ \mathcal{S}' $ para ambos \hs,\ como é exibido na Equação \ref{eq:part_final}.
+        The second step is to map each subset of \Ss$ ' $ for both hardware and software, as is shown in Equation \ref{eq:part_final}.
+        
+        { \small
+        \begin{equation}
+        \mathcal{S}'\!=\!\left \{
+        \underbrace{
+        \underbrace{
+        \left \{ b_0, b_1, ... b_{i-1} \right \}
+        }_{\textnormal{subroutine }C_0},
+        ...
+        \underbrace{
+        \left \{ b_j, b_{j+1}, ... \right \}
+        }_{\textnormal{subroutine }C_{n-i}}
+        ...
+        }_{\textnormal{software}};
+        \ 
+        \underbrace{
+        \underbrace{
+        \left \{ b_i, b_{i+1}, ... \right \}
+        }_{\textnormal{subroutine }C_{n-1}}
+        ...
+        }_{\textnormal{hardware}}
+        \right \} \label{eq:part_final}
+        \end{equation}
+        }
+        
+    
+    
+    \subsection{Performance as Guide to the Hardware and Software Partitioning} \label{sec:ganho_performance}
+        \subsubsection{Performance Gain}
+        
+            %Para aplicações em geral pode estar no acúmulo de pequenos ganhos.
+            %Entretanto, diferente de algoritmos em \software\ no qual tem-se análise de ordem de complexidade, em \hardware\ não possui-se um guia geral para comparação.
+            For applications, in general, the gain can be in the accumulation of small profits.
+            However, different of software level algorithms which have time complexity analysis, in hardware level have not a general guide for comparing.
+            
+            
+            % y é speedup
+            %O ganho, ao comparar uma solução \hs\ contra uma solução puramente \software,\ é tipicamente mensurado por meio do \speedup, e pode ser obtido utilizando a Equação~\ref{eq:speedup1}.
+            %Utiliza-se $ \gamma $ para sua representação, permitindo comparar recursos diferentes para determinar melhores particionamentos.
+            The gain, when comparing a hardware and software solution against an only software solution is typically measured by speedup, and it can be obtained using the Equation~\ref{eq:speedup1}.
+            It uses $ \gamma $ for its representation, allowing to compare different resources to determine betters partitionings.
+            %
+            \begin{equation}
+            \gamma =
+            \frac{
+            \textnormal{\textit{hardware speed}}
+            }{
+            \textnormal{\textit{software speed}}
+            }
+            =
+            \frac{
+            \frac{
+            1
+            } {
+            \textnormal{\textit{hardware time}}
+            }
+            } {
+            \frac{
+            1
+            }{
+            \textnormal{\textit{software time}}
+            }
+            }
+            =
+            \frac{
+            \textnormal{\textit{software time}}
+            } {
+            \textnormal{\textit{hardware time}}
+            } \label{eq:speedup1}
+            \end{equation}
+            %
+            %Mais especificamente, interessa-se no ganho de desempenho individual de cada recurso que pode ser definido como $ \gamma(i), i \in \mathcal{C}\ |\ \gamma(i) =\ ^s\!/_h $.
+            %Para que um algoritmo em \hardware\ seja mais performático, deseja-se que $\gamma > 1$.
+            Specifically, it interest in the individual performance gain of each resource that can be defined as $ \gamma(i), i \in \mathcal{C}\ |\ \gamma(i) =\ ^s\!/_h $.
+            For an algorithm in hardware be more performative, it is desired that $ \gamma > 1 $.
+            
+        
+        \subsubsection{Finite Resources in Electronic Components} \label{sec:recursos}
+        
+            %Um FPGA terá um valor escalar total $ r_{FPGA} $, que representa o total de números de \luts\ disponíveis para sintetização.
+            %Então $ r(i) $ pode ser usado para representar a quantidade de recursos requerida por cada algoritmo $ i $.
+            %Fazendo uma simples relação, tem-se que $ \sum_{i \in \mathbb{D}} r(i) < r_{FPGA} $ restringe quão largo $ \mathbb{D} $ pode crescer, onde $ \mathbb{D} $ é o conjunto de algoritmos candidatos.
+            A FPGA will have a scalar value total $ r_{FPGA} $, that represents the total available of Lookup Tables for synthetization.
+            So, $ r(i) $ can be used to represent the number of resources required for each algorithm $ i $.
+            Making a simple relation, we has that $ \sum_{i \in \mathbb{D}} r(i) < r_{FPGA} $ restricts how large $ \mathbb{D} $ can grow, where $ \mathbb{D} $ is the set of candidates algorithms.
+            
+            %Uma típica plataforma FPGA moderna tem múltiplos tipos de recursos além de \luts,\ como memória, blocos DSP, etc., sendo a quantidade de recursos de cada tecnologia representados matematicamente por  $r_{Logic\ Cells}$, $r_{Memory}$, $r_{DSP}$, $r_{n-1} $, respectivamente.
+            %Dessa forma, podem ser representados por um vetor de recursos
+            A typical modern FPGA platform has multiples types of resources besides Lookup Tables, as memory, DSP blocks, etc., being the number of resources of each technology represent mathematically by $r_{Logic\ Cells}$, $r_{Memory}$, $r_{DSP}$, $r_{n-1} $, respectively.
+            So, they can be represented by a resource vector
+            %
+            %$ \vec{r}_{FPGA} = (r_{Logic\ Cells}, r_{Memory}, r_{DSP}, \dots r_{n-1} ) $
+            %
+            
+                     \begin{equation} \footnotesize 
+                        \vec{r}_{FPGA} =
+                        \begin{pmatrix}
+                        r_{Logic\ Cells} \\
+                        r_{Memory}\\
+                        r_{DSP}\\
+                        \vdots \\
+                        r_{n-1}
+                        \end{pmatrix}
+                     \end{equation}
+            
+            %e com isso,
+            and with that,
+            %
+            %\begin{equation}
+            $\sum_{i \in \mathbb{D}} \vec{r}(i) < \vec{r}_{FPGA}$.
+            %\end{equation}
+            %
+    
+    
+    \subsection{Wearable's Evaluation}
+        %\todo[inline]{ explicando como a teoria da secao III se aplica na pratica ao seu experimento.} 
+        
+        %Enquanto o desempenho do \wearable\ é avaliada pelo tempo de execução do sistema segundo a Equação~\ref{eq:speedup1}, a alocação de recursos deve ser analisada, 
+        %tanto em cada um dos \hardwares\ dos algoritmos gerados por HLS, quanto para o sistema como um todo, respeitando o limite de recursos $ \vec{r}_{FPGA}$.
+        While system runtime evaluates the wearable's performance according to Equation~\ref{eq:speedup1}, the resources allocation must be analyzed, both in each of the hardware of the algorithms generated by HLS and for the system as a whole, respecting the resource limit $ \vec{r}_{FPGA}$.
+        
+        %Dessa forma, será utilizado \A$_{i}$\ para descrever separadamente as implementações dos $i$ códigos candidatos e \Ss$_{j}$\ referencia-se às implementações dos $j$ sistemas sintetizados.
+        %
+        %Com a diferenciação entre \A$_{i}$\ e \Ss$_{j}$\ (parte e todo do sistema)\ é possível analisar tanto as implementações dos módulos gerados por HLS separadamente, quanto os sistemas finais na alocação de recursos.
+        So, it will be used \A$_{i}$\ to describe separately the implementations of the candidate codes $ i $ and \Ss$_{j}$\ to reference the implementations of the synthesized systems $ j $.
+        With the differentiation between \A$_{i}$\ and \Ss$_{j}$\ (part and all of the system), \ is possible to analyze both the implementations of the HLS modules separately and the final systems in resource allocation.
+        
+        

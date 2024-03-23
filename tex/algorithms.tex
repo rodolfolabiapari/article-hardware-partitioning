@@ -1,0 +1,125 @@
+%!TEX root = ../main.tex
+% !TeX encoding = UTF-8
+
+       \begin{algorithm}[t] \footnotesize
+           \KwIn{buffer vector.}
+           \KwOut{mean, variance, standard derivation.}
+           
+           \BlankLine
+           \Begin{
+               $\vars{sum}= \vars{variance} = 0$;
+               \BlankLine
+               
+               \lFor{$\func{length}(\vars{buffer})$}{$\vars{sum} \mathrel{+}= \vars{buffer}_i$}
+               \BlankLine
+               
+               $\vars{mean} = \vars{sum} \div \func{length}(\vars{buffer})$\;
+               \BlankLine
+               
+               
+               \lFor{$\func{length}(\vars{buffer})$}{
+                   $\vars{variance} \mathrel{+}= (\vars{buffer}_i - \vars{mean})^2$
+               }
+               
+               \BlankLine
+               $\vars{variance} \mathrel{\div}= \func{length}(\vars{buffer})$\;
+               \BlankLine
+               $\vars{sd} = \func{sqrt}(\vars{variance})$\;
+               
+               \Return \vars{mean}, \vars{variance}, \vars{sd}\;
+           }
+           \caption{Statistical Method.}
+           \label{alg:statistic}
+       \end{algorithm}
+       
+       \begin{algorithm}[b] \footnotesize
+           \KwIn{buffer vector, point.}
+           \KwOut{interpolated distance.}
+           
+           \BlankLine
+           \Begin{
+               
+               $\vars{new\_distance} = 0$\;
+               \BlankLine
+               
+               \For{$\vars{i}\ in\ 1:\func{length}(\vars{buffer})$}{
+                   $\vars{c} = \vars{d} = 1$;
+                   
+                   \BlankLine
+                   \For{$\vars{j}\ in\ 1:\func{length}(\vars{buffer})$}{
+                       \If{$\vars{i} \ne \vars{j}$}{
+                           $\vars{c} \mathrel{\times}= \vars{point} - \vars{j}$;
+                           %\BlankLine
+                           $\vars{d} \mathrel{\times}= \vars{i} - \vars{j}$;
+                       }
+                   }
+                   \BlankLine
+                   $\vars{new\_distance} \mathrel{+}= \vars{buffer}_i \times \vars{c} \div \vars{d}$;
+               }
+               \BlankLine
+               
+               \lIf{$\vars{new\_distance} \ge 0$}{$\Return\ \vars{new\_distance}$}
+               \lElse{$\Return\ 0$}
+               
+           }
+           \caption{Interpolation by Lagrange Method.}
+           \label{alg:lagrange}
+       \end{algorithm}
+       
+       \begin{algorithm}[t] \footnotesize
+           \KwIn{distance$_1$, distance$_2 = 0$, distance$_3 = 0$.}
+           \KwOut{primacy.}
+           
+           \BlankLine
+           \Begin{
+               
+               $\vars{prime} = \vars{distance}_1 + \vars{distance}_2 + \vars{distance}_3$;
+               \BlankLine
+               
+               \lIf{$\vars{prime} \le 1$}{\Return 0}
+               \BlankLine
+               \lIf{$\vars{prime} = 2$}{\Return 1}
+               \BlankLine
+               
+               \lIf{\vars{prime} $\func{mod}(2) = 0$}{$\vars{prime} \mathrel{+}= 1$}
+               \BlankLine
+               
+               $\vars{divider} = \vars{prime} \div 2$;
+               
+               \lIf{\vars{divider} $\func{mod}(2) = 0$}{$\vars{divider} \mathrel{+}= 1$}
+               \BlankLine
+               
+               
+               \While{\vars{divider} $> 2$}{
+                   \lIf{\vars{prime} $\func{mod}(divider) = 0$}{\Return 0}
+                   \BlankLine
+                   \lElse{\vars{divider} $\mathrel{-}= 2$;}
+                   
+               }
+               \Return 1;
+               
+           }
+           \caption{Prime Number Method.}
+           \label{alg:prime}
+       \end{algorithm}
+       
+       \begin{algorithm}[b]
+           \footnotesize
+           \KwIn{distance read; min distance.}
+           \KwOut{boolean.}
+           
+           \BlankLine
+           \Begin{
+               \tcp{If there is risk, return TRUE}
+               \uIf{\vars{distance\_read} $\le$ \vars{min\_distance}}{
+                   \Return 1
+               }
+               \lElse {
+                   \Return 0
+               }
+               
+           }
+           \caption{Risk Processing Method.}
+           \label{alg:risk}
+       \end{algorithm}
+       
